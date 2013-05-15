@@ -408,8 +408,9 @@ typedef NS_ENUM(NSUInteger, SMPageControlImageType) {
 // We're using touchesEnded: because we want to mimick UIPageControl as close as possible
 // As of iOS 6, UIPageControl still (as far as we know) does not use a tap gesture recognizer. This means that actions like
 // touching down, sliding around, and releasing, still results in the page incrementing or decrementing.
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    if (!self.enabled)
+        return;
 	UITouch *touch = [touches anyObject];
 	CGPoint point = [touch locationInView:self];
 	CGSize size = [self sizeForNumberOfPages:self.numberOfPages];
